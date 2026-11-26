@@ -84,3 +84,65 @@
       top: 20px;
       right: 20px;
       padding: 12px 20px;
+      background: #f2b705;
+      color: #1f2328;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="info-superior">
+    <strong id="titulo-maquina">Máquina IMABE</strong>
+    <span>Desliza para rotar · Pellizca para acercar</span>
+  </div>
+
+  <!-- Redirige a ar.html (tu escena de 8th Wall) -->
+  <button class="ar-button" onclick="window.location.href='ar.html'">
+    Abrir en AR
+  </button>
+
+  <!-- Visor 3D en reposo (sin autoplay para ver la máquina antes de animarse) -->
+  <model-viewer 
+    id="mv-visor" 
+    src="assets/GLBAnimacionCompleta_MaquinayFardo.glb" 
+    camera-controls 
+    touch-action="pan-y"
+    shadow-intensity="1">
+  </model-viewer>
+
+  <!-- Botones para cambiar de máquina -->
+  <div class="menu-maquinas">
+    <button id="btn-imabe" class="btn activa" onclick="cambiarVisor('imabe')">IMABE</button>
+    <button id="btn-presona" class="btn" onclick="cambiarVisor('presona')">Presona</button>
+  </div>
+
+  <script>
+    function cambiarVisor(tipo) {
+      const visor = document.getElementById('mv-visor');
+      const titulo = document.getElementById('titulo-maquina');
+      const btnImabe = document.getElementById('btn-imabe');
+      const btnPresona = document.getElementById('btn-presona');
+
+      if (tipo === 'imabe') {
+        visor.src = 'assets/GLBAnimacionCompleta_MaquinayFardo.glb';
+        titulo.textContent = 'Máquina IMABE';
+        btnImabe.classList.add('activa');
+        btnPresona.classList.remove('activa');
+      } else {
+        visor.src = 'assets/MaquinaPresona.glb'; // Cambia por el nombre exacto de tu GLB de Presona en assets/
+        titulo.textContent = 'Máquina Presona';
+        btnPresona.classList.add('activa');
+        btnImabe.classList.remove('activa');
+      }
+    }
+  </script>
+
+</body>
+</html>
