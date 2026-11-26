@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Catálogo 3D Industrial - IMABE y Presona</title>
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body { 
+      margin: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+      background: #f1efe9; 
+      overflow: hidden; 
+      height: 100dvh; 
+      width: 100vw; 
+    }
+    
+    model-viewer { 
+      width: 100%; 
+      height: 100%; 
+    }
+
+    /* Etiqueta superior izquierda con el nombre de la máquina */
+    .info-superior {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(31, 35, 40, 0.92);
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border-left: 4px solid #f2b705;
+      z-index: 10;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+    .info-superior strong {
+      display: block;
+      font-size: 15px;
+    }
+    .info-superior span {
+      font-size: 12px;
+      color: #d0d7de;
+    }
+    
+    /* Menú inferior para alternar entre IMABE y Presona */
+    .menu-maquinas { 
+      position: absolute; 
+      bottom: 36px; 
+      left: 0; 
+      right: 0; 
+      display: flex; 
+      justify-content: center; 
+      gap: 15px; 
+      padding: 0 16px;
+      z-index: 10; 
+    }
+    
+    .btn { 
+      padding: 15px 25px; 
+      background: #1f2328; 
+      color: white; 
+      border: 2px solid #444c56; 
+      border-radius: 8px; 
+      font-weight: bold; 
+      font-size: 16px;
+      cursor: pointer; 
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: all 0.2s ease;
+    }
+    
+    .btn.activa,
+    .btn:active {
+      background: #f2b705;
+      color: #1f2328;
+      border-color: #f2b705;
+    }
+
+    /* Botón superior derecho para entrar al AR de 8th Wall */
+    .ar-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;

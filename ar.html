@@ -1,0 +1,89 @@
+<!doctype html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Experiencia AR - Industrial</title><meta itemprop="name" content="Experiencia AR - Industrial"><meta name="twitter:title" content="Experiencia AR - Industrial"><meta property="og:title" content="Experiencia AR - Industrial"><meta property="og:site_name" content="Experiencia AR - Industrial"><meta name="description" content="Visualización industrial en Realidad Aumentada."><meta itemprop="description" content="Visualización industrial en Realidad Aumentada."><meta property="og:description" content="Visualización industrial en Realidad Aumentada."><meta name="twitter:description" content="Visualización industrial en Realidad Aumentada."><script crossorigin="anonymous" src="./external/runtime/runtime.js"></script><script crossorigin="anonymous" src="./external/xr/xr.js" async="true" data-preload-chunks="face, slam"></script></head><body><style>.btn-volver-catalogo {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 99999;
+      padding: 10px 16px;
+      background: #1f2328;
+      color: #ffffff;
+      border: 2px solid #f2b705;
+      border-radius: 8px;
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }</style><button class="btn-volver-catalogo" onclick="window.location.href='index.html'">← Catálogo 3D</button><script>const textosEspanol = [
+      {en: /ar requires access to device motion sensors/i, es: 'La experiencia AR requiere acceso a los sensores de movimiento de tu dispositivo.'},
+      {en: /tap to grant camera access/i, es: 'Toca para permitir el acceso a la cámara y visualizar las máquinas en AR'},
+      {en: /allow camera access/i, es: 'Permite el acceso a la cámara para iniciar la experiencia AR'},
+      {en: /camera access/i, es: 'Acceso a la cámara'},
+      {en: /motion and orientation/i, es: 'Permite el acceso a los sensores de movimiento para ubicar la máquina'},
+      {en: /tap to start/i, es: 'Toca para iniciar'},
+      {en: /^cancel$/i, es: 'Cancelar', tipo: 'cancelar'},
+      {en: /^continue$/i, es: 'Continuar', tipo: 'continuar'},
+      {en: /loading/i, es: 'Cargando experiencia AR...'},
+      {en: /powered by 8th wall/i, es: ''}
+    ];
+
+    function estilizarBoton(elemento, tipo) {
+      const boton = elemento.closest('button, a, [role="button"]') || elemento;
+      if (!boton || !boton.style) return;
+
+      if (tipo === 'continuar') {
+        boton.style.setProperty('background', '#f2b705', 'important');
+        boton.style.setProperty('background-color', '#f2b705', 'important');
+        boton.style.setProperty('color', '#1f2328', 'important');
+        boton.style.setProperty('border', 'none', 'important');
+        boton.style.setProperty('border-radius', '8px', 'important');
+        boton.style.setProperty('font-weight', 'bold', 'important');
+      } else if (tipo === 'cancelar') {
+        boton.style.setProperty('background', '#1f2328', 'important');
+        boton.style.setProperty('background-color', '#1f2328', 'important');
+        boton.style.setProperty('color', '#ffffff', 'important');
+        boton.style.setProperty('border', '1px solid #444c56', 'important');
+        boton.style.setProperty('border-radius', '8px', 'important');
+      }
+    }
+
+    function observarRaiz(raiz) {
+      if (!raiz || raiz.__observado8w) return;
+      raiz.__observado8w = true;
+      traducirRaiz(raiz);
+      new MutationObserver(() => traducirRaiz(raiz)).observe(raiz, {
+        childList: true,
+        subtree: true,
+        characterData: true
+      });
+    }
+
+    function traducirRaiz(raiz) {
+      if (!raiz) return;
+      const walker = document.createTreeWalker(raiz, NodeFilter.SHOW_TEXT, null);
+      let nodoTexto;
+      while ((nodoTexto = walker.nextNode())) {
+        const valor = nodoTexto.nodeValue ? nodoTexto.nodeValue.trim() : '';
+        if (!valor) continue;
+        for (const regla of textosEspanol) {
+          if (regla.en.test(valor)) {
+            nodoTexto.nodeValue = regla.es;
+            if (regla.tipo && nodoTexto.parentElement) {
+              estilizarBoton(nodoTexto.parentElement, regla.tipo);
+            }
+            break;
+          }
+        }
+      }
+      raiz.querySelectorAll('*').forEach((el) => {
+        if (el.shadowRoot) observarRaiz(el.shadowRoot);
+      });
+    }
+
+    const origAttachShadow = Element.prototype.attachShadow;
+    Element.prototype.attachShadow = function (init) {
+      const shadow = origAttachShadow.call(this, init);
+      observarRaiz(shadow);
+      return shadow;
+    };
+
+    observarRaiz(document.documentElement);</script><script src="bundle.js"></script></body></html>

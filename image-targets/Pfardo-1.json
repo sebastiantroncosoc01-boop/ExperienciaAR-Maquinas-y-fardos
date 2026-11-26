@@ -1,0 +1,23 @@
+{
+  "type": "PLANAR",
+  "properties": {
+    "top": 128,
+    "left": 0,
+    "width": 900,
+    "height": 1200,
+    "isRotated": false,
+    "originalWidth": 900,
+    "originalHeight": 1600
+  },
+  "imagePath": "image-targets/Pfardo-1_luminance.jpg",
+  "metadata": null,
+  "name": "Pfardo-1",
+  "resources": {
+    "originalImage": "Pfardo-1_original.jpg",
+    "croppedImage": "Pfardo-1_cropped.jpg",
+    "thumbnailImage": "Pfardo-1_thumbnail.jpg",
+    "luminanceImage": "Pfardo-1_luminance.jpg"
+  },
+  "created": 1795449994966,
+  "updated": 1795450008973
+}

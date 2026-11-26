@@ -1,0 +1,23 @@
+{
+  "type": "PLANAR",
+  "properties": {
+    "top": 0,
+    "left": 18,
+    "width": 1200,
+    "height": 1600,
+    "isRotated": false,
+    "originalWidth": 1237,
+    "originalHeight": 1600
+  },
+  "imagePath": "image-targets/Pmaquina_luminance.jpg",
+  "metadata": null,
+  "name": "Pmaquina",
+  "resources": {
+    "originalImage": "Pmaquina_original.jpg",
+    "croppedImage": "Pmaquina_cropped.jpg",
+    "thumbnailImage": "Pmaquina_thumbnail.jpg",
+    "luminanceImage": "Pmaquina_luminance.jpg"
+  },
+  "created": 1795450678121,
+  "updated": 1795450678121
+}
