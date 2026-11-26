@@ -131,12 +131,12 @@
       const btnPresona = document.getElementById('btn-presona');
 
       if (tipo === 'imabe') {
-        visor.src = 'assets/GLBAnimacionCompleta_MaquinayFardo.glb';
+        visor.src = 'assets/GLBAnimacionCompleta_MaquinayFardo_IMABE.glb';
         titulo.textContent = 'Máquina IMABE';
         btnImabe.classList.add('activa');
         btnPresona.classList.remove('activa');
       } else {
-        visor.src = 'assets/MaquinaPresona.glb'; // Cambia por el nombre exacto de tu GLB de Presona en assets/
+        visor.src = 'assets/GLBAnimacionCompleta_MaquinayFardo_PRESONA.glb'; // Cambia por el nombre exacto de tu GLB de Presona en assets/
         titulo.textContent = 'Máquina Presona';
         btnPresona.classList.add('activa');
         btnImabe.classList.remove('activa');
