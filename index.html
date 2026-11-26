@@ -21,51 +21,122 @@
     model-viewer { 
       width: 100%; 
       height: 100%; 
+      --poster-color: transparent;
     }
 
-    /* Etiqueta superior izquierda con el nombre de la máquina */
-    .info-superior {
+    /* Barra superior flexible: evita choques entre etiqueta y botón en celular */
+    .barra-superior {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    /* Etiqueta superior izquierda */
+    .info-superior {
+      pointer-events: auto;
       background: rgba(31, 35, 40, 0.92);
       color: #ffffff;
-      padding: 10px 16px;
+      padding: 8px 12px;
       border-radius: 8px;
       border-left: 4px solid #f2b705;
-      z-index: 10;
       box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      max-width: 52%;
     }
     .info-superior strong {
       display: block;
-      font-size: 15px;
+      font-size: 14px;
+      line-height: 1.2;
     }
     .info-superior span {
-      font-size: 12px;
+      display: block;
+      font-size: 11px;
       color: #d0d7de;
+      margin-top: 2px;
+      line-height: 1.2;
+    }
+
+    /* Botón superior derecho compacto */
+    .ar-button {
+      pointer-events: auto;
+      padding: 10px 12px;
+      background: #f2b705;
+      color: #1f2328;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 1.2;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+      flex-shrink: 0;
+    }
+
+    /* Indicador de carga centrado */
+    .indicador-carga {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(31, 35, 40, 0.92);
+      color: #ffffff;
+      padding: 14px 20px;
+      border-radius: 10px;
+      border: 1px solid #f2b705;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 15;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .indicador-carga.oculto {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 3px solid rgba(242, 183, 5, 0.3);
+      border-top-color: #f2b705;
+      border-radius: 50%;
+      animation: girar 0.8s linear infinite;
+    }
+    @keyframes girar {
+      to { transform: rotate(360deg); }
     }
     
     /* Menú inferior para alternar entre IMABE y Presona */
     .menu-maquinas { 
       position: absolute; 
-      bottom: 36px; 
+      bottom: 30px; 
       left: 0; 
       right: 0; 
       display: flex; 
       justify-content: center; 
-      gap: 15px; 
+      gap: 12px; 
       padding: 0 16px;
       z-index: 10; 
     }
     
     .btn { 
-      padding: 15px 25px; 
+      padding: 13px 22px; 
       background: #1f2328; 
       color: white; 
       border: 2px solid #444c56; 
       border-radius: 8px; 
       font-weight: bold; 
-      font-size: 16px;
+      font-size: 15px;
       cursor: pointer; 
       box-shadow: 0 4px 6px rgba(0,0,0,0.3);
       transition: all 0.2s ease;
@@ -77,41 +148,32 @@
       color: #1f2328;
       border-color: #f2b705;
     }
-
-    /* Botón superior derecho para entrar al AR de 8th Wall */
-    .ar-button {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      padding: 12px 20px;
-      background: #f2b705;
-      color: #1f2328;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      font-size: 15px;
-      cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-      z-index: 20;
-    }
   </style>
 </head>
 <body>
 
-  <div class="info-superior">
-    <strong id="titulo-maquina">Máquina IMABE</strong>
-    <span>Desliza para rotar · Pellizca para acercar</span>
+  <div class="barra-superior">
+    <div class="info-superior">
+      <strong id="titulo-maquina">Máquina IMABE</strong>
+      <span>Desliza para rotar · Pellizca para acercar</span>
+    </div>
+
+    <button class="ar-button" onclick="window.location.href='ar.html'">
+      Abrir Realidad Aumentada
+    </button>
   </div>
 
-  <!-- Redirige a ar.html (tu escena de 8th Wall) -->
-  <button class="ar-button" onclick="window.location.href='ar.html'">
-    Abrir en AR
-  </button>
+  <div id="loader-3d" class="indicador-carga">
+    <div class="spinner"></div>
+    <span id="texto-carga">Cargando Máquina IMABE...</span>
+  </div>
 
-  <!-- Visor 3D en reposo (sin autoplay para ver la máquina antes de animarse) -->
+  <!-- Visor 3D en reposo cargando IMABE desde el inicio -->
   <model-viewer 
     id="mv-visor" 
-    src="assets/GLBAnimacionCompleta_MaquinayFardo.glb" 
+    src="assets/GLBAnimacionCompleta_MaquinayFardo_IMABE.glb" 
+    reveal="auto"
+    loading="eager"
     camera-controls 
     touch-action="pan-y"
     shadow-intensity="1">
@@ -124,19 +186,52 @@
   </div>
 
   <script>
-    function cambiarVisor(tipo) {
-      const visor = document.getElementById('mv-visor');
-      const titulo = document.getElementById('titulo-maquina');
-      const btnImabe = document.getElementById('btn-imabe');
-      const btnPresona = document.getElementById('btn-presona');
+    const RUTA_IMABE = 'assets/GLBAnimacionCompleta_MaquinayFardo_IMABE.glb';
+    const RUTA_PRESONA = 'assets/GLBAnimacionCompleta_MaquinayFardo_PRESONA.glb';
 
+    const visor = document.getElementById('mv-visor');
+    const titulo = document.getElementById('titulo-maquina');
+    const btnImabe = document.getElementById('btn-imabe');
+    const btnPresona = document.getElementById('btn-presona');
+    const loader = document.getElementById('loader-3d');
+    const textoCarga = document.getElementById('texto-carga');
+
+    function mostrarCarga(mensaje) {
+      textoCarga.textContent = mensaje || 'Cargando modelo 3D...';
+      loader.classList.remove('oculto');
+    }
+
+    function ocultarCarga() {
+      loader.classList.add('oculto');
+    }
+
+    visor.addEventListener('progress', (evento) => {
+      const progreso = Math.round(evento.detail.totalProgress * 100);
+      if (progreso < 100) {
+        mostrarCarga(`Cargando modelo 3D... ${progreso}%`);
+      } else {
+        ocultarCarga();
+      }
+    });
+
+    visor.addEventListener('load', () => {
+      ocultarCarga();
+    });
+
+    visor.addEventListener('error', () => {
+      textoCarga.textContent = 'Error al cargar el modelo 3D';
+    });
+
+    function cambiarVisor(tipo) {
       if (tipo === 'imabe') {
-        visor.src = 'assets/GLBAnimacionCompleta_MaquinayFardo_IMABE.glb';
+        mostrarCarga('Cargando Máquina IMABE...');
+        visor.src = RUTA_IMABE;
         titulo.textContent = 'Máquina IMABE';
         btnImabe.classList.add('activa');
         btnPresona.classList.remove('activa');
       } else {
-        visor.src = 'assets/GLBAnimacionCompleta_MaquinayFardo_PRESONA.glb'; // Cambia por el nombre exacto de tu GLB de Presona en assets/
+        mostrarCarga('Cargando Máquina Presona...');
+        visor.src = RUTA_PRESONA;
         titulo.textContent = 'Máquina Presona';
         btnPresona.classList.add('activa');
         btnImabe.classList.remove('activa');
